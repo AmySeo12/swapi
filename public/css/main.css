@@ -1,0 +1,11 @@
+.total{
+	padding: 10px;
+}
+
+a{
+	cursor: pointer;
+}
+
+select{
+	display: block;
+}
