@@ -25,7 +25,7 @@ var templateDos= '<div class="col s12 m4">'+
 
 
 var especies =	"<option value='__valor__'>__especie-nombre__</option>";
-var ir= "http://swapi.co/api/people/";
+var ir= "https://swapi.co/api/people/";
 
 var plantilla= function(response){
 	$("#total").text(response.results.length);
@@ -54,7 +54,7 @@ var plantilla= function(response){
 var especiesPj= function(response){
 	var tiposEspecies="";
 	$.each(response.results, function(i,personaje){
-		var id= "http://swapi.co/api/people/";
+		var id= "https://swapi.co/api/people/";
 		var perso= "";
 		$.each(personaje.people, function(i,personaje){
 			perso+= personaje.replace(id, "");
@@ -67,8 +67,8 @@ var especiesPj= function(response){
 }
 
 $(document).ready(function(){
-	$.getJSON("http://swapi.co/api/people/", plantilla);
-	$.getJSON("http://swapi.co/api/species/", especiesPj);
+	$.getJSON("https://swapi.co/api/people/", plantilla);
+	$.getJSON("https://swapi.co/api/species/", especiesPj);
 
 	$("#next").click(function(event){
 		event.preventDefault();
