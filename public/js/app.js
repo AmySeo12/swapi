@@ -35,9 +35,13 @@ var plantilla= function(response){
 		.replace("{{name}}", personaje.name)
 		.replace("{{url}}", personaje.url);
 	})
+	if(response.next != null)
+		var data= response.next.replace("http", "https");
+	if(response.previous != null)
+		var dataP= response.previous.replace("http", "https");
 	$("#contenedor").html(personajes);
-	$("#next").attr("data-url", response.next);
-	$("#prev").attr("data-url", response.previous);
+	$("#next").attr("data-url", data);
+	$("#prev").attr("data-url", dataP);
 
 	if(!response.next){
 		$("#next").fadeOut();
