@@ -10,8 +10,22 @@ var template= '<div class="col s12 m4">'+
 				    '</div>'+
 		    	'</div>'+
 		  	'</div>'
+var templateDos= '<div class="col s12 m4">'+
+			    '<div class="card horizontal hoverable">'+
+			      	'<div class="card-stacked">'+
+			        	'<div class="card-content teal lighten-3 white-text">'+
+			          		'<p>Hi, my name <strong>{{name}}</strong></p>'+
+			        	'</div>'+
+				        '<div class="card-action">'+
+				          	'<a data-show-url="{{url}}" class="teal-text text-lighten-3 about">This is a link</a>'+
+				        '</div>'+
+				    '</div>'+
+		    	'</div>'+
+		  	'</div>'
+
 
 var especies =	"<option value='__valor__'>__especie-nombre__</option>";
+var ir= "http://swapi.co/api/people/";
 
 var plantilla= function(response){
 	$("#total").text(response.results.length);
@@ -47,7 +61,7 @@ var especiesPj= function(response){
 		})
 		tiposEspecies+= especies
 		.replace("__especie-nombre__", personaje.name)
-		.replace("__valor__", perso.substring(0, perso.length-1));
+		.replace("__valor__", perso);
 	});
 	$("#opciones").html("<option value='' disabled selected>Choose your option</option>" + tiposEspecies);
 }
@@ -70,5 +84,26 @@ $(document).ready(function(){
 	$("#contenedor").on("click", ".about",function(event){
 		event.preventDefault();
 		alert("Hola");
+	})
+
+	$("select").change(function(){
+		var valores= $(this).val();
+		var personajes= "";
+		console.log(typeof valores);
+		var b= "";
+		for(var i= 0; i < valores.length; i++){
+			if(parseInt(valores[i]) > 0){
+				b+=valores[i];
+			}else{
+				$.getJSON(ir+b+"/", function(response){
+					personajes+=templateDos
+						.replace("{{name}}", response.name)
+						.replace("{{url}}", response.url)
+				$("#especies").html(personajes);
+					})
+				
+				b="";		
+			}
+		}
 	})
 });
