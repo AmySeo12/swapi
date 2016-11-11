@@ -54,14 +54,14 @@ var plantilla= function(response){
 var especiesPj= function(response){
 	var tiposEspecies="";
 	$.each(response.results, function(i,personaje){
-		var id= "https://swapi.co/api/people/";
+		var id= "http://swapi.co/api/people/";
 		var perso= "";
 		$.each(personaje.people, function(i,personaje){
 			perso+= personaje.replace(id, "");
 		})
 		tiposEspecies+= especies
 		.replace("__especie-nombre__", personaje.name)
-		.replace("__valor__", perso);
+		.replace("__valor__", perso.substring(0,perso.length-1));
 	});
 	$("#opciones").html("<option value='' disabled selected>Choose your option</option>" + tiposEspecies);
 }
@@ -87,23 +87,15 @@ $(document).ready(function(){
 	})
 
 	$("select").change(function(){
-		var valores= $(this).val();
-		var personajes= "";
-		console.log(typeof valores);
-		var b= "";
+		var valores= $(this).val().split("/");
+		var personajes= "";;
 		for(var i= 0; i < valores.length; i++){
-			if(parseInt(valores[i]) > 0){
-				b+=valores[i];
-			}else{
-				$.getJSON(ir+b+"/", function(response){
-					personajes+=templateDos
-						.replace("{{name}}", response.name)
-						.replace("{{url}}", response.url)
-					$("#especies").html(personajes);
-					})
-				
-				b="";		
-			}
+			$.getJSON(ir+valores[i]+"/", function(response){
+				personajes+=templateDos
+					.replace("{{name}}", response.name)
+					.replace("{{url}}", response.url)
+				$("#especies").html(personajes);
+			})		
 		}
 	})
 });
